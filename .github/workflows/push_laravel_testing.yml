@@ -2,7 +2,7 @@ name: Laravel
 on:
   pull_request:
     branches: [ master ]
-    types: [close]
+    types: [ closed ]
 
 jobs:
   push-laravel-testing:
@@ -10,12 +10,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Executing remote ssh commands using password
-      uses: appleboy/ssh-action@v0.1.7
-      if: github.event.pull_request.merged == 'true'
-      # with:
-      #   host: ${{ secrets.HOST }}
-      #   username: ${{ secrets.USERNAME }}
-      #   password: ${{ secrets.PASSWORD }}
-      #   port: ${{ secrets.PORT }}
-      #   script: cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
+    - name: Setup PHP
+      if: github.event.pull_request.merged == true
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.0
