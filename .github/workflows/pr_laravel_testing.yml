@@ -32,7 +32,8 @@ jobs:
         port: ${{ secrets.PORT }}
         script_stop: true
         script: |
-          cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
+          cd Pleio/pleio.lift.environment.2022/src_feature
+          vendor/bin/phpunit tests/Feature/Tasks --stop-on-failure
           result=$?
           echo "Result: $result"
           exit $result
