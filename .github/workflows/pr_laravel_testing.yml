@@ -30,8 +30,6 @@ jobs:
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
-      env:
-        COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{secrets.COMPOSER_AUTH}}"} }'
       run: composer install --ignore-platform-reqs --no-scripts
     - name: Execute Unit tests via PHPUnit
       env:
