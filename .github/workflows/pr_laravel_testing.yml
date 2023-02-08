@@ -1,8 +1,10 @@
 name: Laravel
 on:
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
-    types: [ opened ]
+    types: [created]
 
 jobs:
   pull-request-laravel-testing:
@@ -20,3 +22,12 @@ jobs:
       run: composer install --ignore-platform-reqs --no-scripts
     - name: Execute Unit tests via PHPUnit
       run: vendor/bin/phpunit tests/Unit
+    - name: Executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.7
+      if: success()
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
