@@ -35,4 +35,4 @@ jobs:
       env:
         REDIS_HOST: localhost
         REDIS_PORT: 6379
-      run: php artisan optimize:clear &&  vendor/bin/phpunit tests/Unit --coverage-html=coverage
+      run: vendor/bin/phpunit tests/Unit
