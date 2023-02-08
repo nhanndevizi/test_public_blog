@@ -22,7 +22,7 @@ jobs:
       run: composer install --ignore-platform-reqs --no-scripts
     - name: Execute Unit tests via PHPUnit
       run: vendor/bin/phpunit tests/Unit
-    - name: Executing remote ssh commands using password
+    - name: Run command on remote servers
       uses: appleboy/ssh-action@v0.1.7
       if: success()
       with:
@@ -31,4 +31,11 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script_stop: true
-        script: cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
+        script: |
+          cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
+          result=$?
+          echo "Result: $result"
+          exit $result
+    - name: Check result
+      if: ${{ steps.run_command.outputs.result != 0 }}
+      run: exit 1
