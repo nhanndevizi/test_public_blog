@@ -30,12 +30,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
+        script_stop: true
         script: cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
-  check:
-    runs-on: ubuntu-latest
-    needs: pull-request-laravel-testing
-    steps:
-    - name: Check if the bat file ran successfully
-      if: ${{ needs.pull-request-laravel-testing.outputs.exitcode == 0 }}
-      run: |
-          echo "Check if the bat file ran successfully"
