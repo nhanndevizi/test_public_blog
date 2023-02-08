@@ -4,7 +4,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-    types: [created]
+    types: [ opened ]
 
 jobs:
   pull-request-laravel-testing:
