@@ -30,6 +30,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script_stop: true
-        script: |
-          cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
+        script: cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
