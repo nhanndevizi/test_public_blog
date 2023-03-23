@@ -1,33 +1,19 @@
 name: Laravel
 on:
-  # push:
-  #   branches: [ master ]
   pull_request:
     branches: [ master ]
-    # types: [created]
 
 jobs:
   pull-request-laravel-testing:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: 8.0
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Install Dependencies
-      run: composer install --ignore-platform-reqs --no-scripts
-    - name: Execute Unit tests via PHPUnit
-      run: vendor/bin/phpunit tests/Unit
-    - name: Executing remote ssh commands using password
+    - name: Executing remote ssh commands using ssh file
       uses: appleboy/ssh-action@v0.1.7
-      if: success()
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: cd Pleio/pleio.lift.environment.2022/src_feature && sh testing.sh
+        host: ${{ secrets.HOST_AUTO }}
+        username: ${{ secrets.USERNAME_AUTO }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+           whoami
+           ls -al
